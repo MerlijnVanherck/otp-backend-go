@@ -1,0 +1,22 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+
+Resources:
+  OtpFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: bootstrap
+      Runtime: provided.al2023
+      MemorySize: 128
+      ReservedConcurrentExecutions: 1
+      Events:
+        ApiEvent:
+          Type: Api
+          Properties:
+            Path: /totp
+            Method: GET
+        ApiEvent:
+          Type: Api
+          Properties:
+            Path: /hotp
+            Method: GET
