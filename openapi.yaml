@@ -1,0 +1,45 @@
+version: 3.1.1
+info:
+  title: One-Time Password FaaS
+  version: 1.0.0
+servers:
+  - url: /otp/api/v1
+paths:
+  /totp:
+    get:
+      parameters:
+        - $ref: '#/components/parameters/secret'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/otp'
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+components:
+  parameters:
+    secret:
+      name: secret
+      in: query
+      required: true
+      schema:
+        type: string
+  schemas:
+    error:
+      type: object
+      required:
+        - message
+      properties:
+        message:
+          type: string
+    otp:
+      type: object
+      required:
+        - code
+      properties:
+        code:
+          type: string
