@@ -2,21 +2,24 @@ AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
 
 Resources:
+  OtpGateway:
+    Type: AWS::Serverless::HttpApi
+    Properties:
+      DefinitionUri: ./openapi.yaml
+      
   OtpFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: bootstrap
-      Runtime: provided.al2023
+      Architectures:
+        - arm64
       MemorySize: 128
+      Runtime: provided.al2023
+      Handler: bootstrap
+      CodeUri: .
+      Timeout: 1
       ReservedConcurrentExecutions: 1
       Events:
         ApiEvent:
-          Type: Api
+          Type: HttpApi
           Properties:
-            Path: /totp
-            Method: GET
-        ApiEvent:
-          Type: Api
-          Properties:
-            Path: /hotp
-            Method: GET
+            ApiId: !Ref OtpGateway
