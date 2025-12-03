@@ -1,4 +1,4 @@
-version: 3.1.1
+openapi: 3.1.1
 info:
   title: One-Time Password FaaS
   version: 1.0.0
